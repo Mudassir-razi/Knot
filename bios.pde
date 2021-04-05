@@ -50,7 +50,8 @@ class bios
     //imagesave
     if (key == 'z')
     {
-      thread("saveImage");
+      saveImage();
+      //thread("saveImage");
     }
 
     //vertex control
@@ -107,6 +108,7 @@ class bios
     {
       println("Reomves");
       layers.remove(layers.size() - 2);
+      graphs.remove(graphs.size() - 1);
     }
 
     radius = clamp(radius, 0.0, 1000.0);

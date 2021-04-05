@@ -43,19 +43,9 @@ class GonHolder
   
   void display()
   {
-    layer.translate(center.x, center.y);
-    layer.rotate((gloRot*PI)/180);
-    float angle = (360.00/count)*(PI/180);
-    for(int i = 0;i < count;i++)
-    {
-      layer.pushMatrix();
-      layer.rotate(angle * i);
-      layer.translate(offset, 0);
-      gons.get(i).display(layer, locRot, shade, stroke, borderWidth);
-      layer.popMatrix();
-    }
+    displayOnLayer(layer, false);
   }
-  
+
   void updateRotation(float global, float local, float w)
   {
     gloRot = global;
@@ -94,6 +84,23 @@ class GonHolder
       Ngon currentGon = gons.get(i);
       currentGon.update(n, rad);
     }
+  }
+  
+  private void displayOnLayer(PGraphics l, boolean clipping)
+  {
+    if(clipping)l.clip(0,0, width, height);
+    l.translate(center.x, center.y);
+    l.rotate((gloRot*PI)/180);
+    float angle = (360.00/count)*(PI/180);
+    for(int i = 0;i < count;i++)
+    {
+      l.pushMatrix();
+      l.rotate(angle * i);
+      l.translate(offset, 0);
+      gons.get(i).display(l, locRot, shade, stroke, borderWidth);
+      l.popMatrix();
+    }
+    if(clipping)l.noClip();
   }
   
 }
